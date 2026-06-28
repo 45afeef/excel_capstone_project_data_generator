@@ -7,6 +7,7 @@ from generators.employees import generate_employees
 from generators.holidays import generate_holidays
 from generators.leave import generate_leave_records
 from generators.attendance import generate_attendance
+from generators.performance import generate_performance_reviews
 
 
 # ------------------------------------------
@@ -44,6 +45,12 @@ attendance = generate_attendance(
     leave
 )
 
+print("Generating Performance Reviews...")
+performance = generate_performance_reviews(
+    employees,
+    attendance,
+    leave
+)
 
 # ------------------------------------------
 # WRITE TO EXCEL (WRITER BLOCK)
@@ -92,6 +99,12 @@ with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
     attendance.to_excel(
         writer,
         sheet_name="Attendance",
+        index=False
+    )
+
+    performance.to_excel(
+        writer,
+        sheet_name="Performance_Reviews",
         index=False
     )
 
